@@ -1,0 +1,30 @@
+{
+  "name": "graphql-react-hooks-workshop-music-service",
+  "version": "1.0.0",
+  "scripts": {
+    "db:create": "node scripts/createDB.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js | bunyan"
+  },
+  "dependencies": {
+    "@apollo/federation": "^0.10.2",
+    "apollo-datasource": "^0.6.3",
+    "apollo-datasource-rest": "^0.6.5",
+    "apollo-server": "^2.9.5",
+    "bunyan": "^1.8.12",
+    "graphql": "^14.5.8",
+    "sequelize": "^5.19.7",
+    "sqlite3": "^4.1.0"
+  },
+  "devDependencies": {
+    "apollo": "^2.21.0",
+    "cross-env": "^5.2.1",
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.17.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.18.2"
+  }
+}

@@ -1,0 +1,50 @@
+.nav {
+  flex-shrink: 0;
+  width: 240px;
+}
+
+.nav ul {
+  height: 100%;
+}
+
+.nav a,
+.nav a .icon {
+  color: var(--light-gray);
+}
+.nav a,
+.logOut {
+  width: 240px;
+  transition: var(--fast);
+  border-radius: 0;
+  display: block;
+  padding: 1rem;
+}
+.nav a:hover,
+.nav a:hover .icon,
+.logOut:hover .icon {
+  color: var(--dark-blue) !important;
+  transition: var(--fast);
+}
+.nav a.active,
+.nav a.active .icon {
+  color: var(--blue);
+}
+.nav a.active {
+  background-color: var(--white);
+}
+.logOut {
+  position: absolute !important;
+  bottom: 0;
+  color: rgba(0, 0, 0, 0.54) !important;
+  padding-left: 20px !important;
+}
+
+.home, .home .icon {
+  color: white !important;
+}
+.home {
+  background-color: var(--blue) !important;
+}
+.home:hover {
+  background-color: var(--dark-blue) !important;
+}

@@ -1,0 +1,12 @@
+.error {
+  padding-top: 200px;
+}
+
+.reason {
+  text-transform: lowercase;
+}
+
+.lyrics {
+  white-space: pre-wrap; /* This displays line breaks */
+  text-align: center;
+}

@@ -1,0 +1,5 @@
+export const logIn = '/log-in'
+export const profile = '/profile'
+export const signUp = '/sign-up'
+export const songs = '/songs'
+export const users = '/users'

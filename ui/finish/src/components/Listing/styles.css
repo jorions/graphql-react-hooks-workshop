@@ -1,0 +1,46 @@
+.card {
+  width: 300px;
+  height: 300px;
+  background-color: white;
+  margin: 10px;
+  position: relative;
+}
+.card > a:first-child {
+  height: calc(100% - 94px);
+}
+.card > a:last-child {
+  height: 94px;
+}
+
+.subtitle {
+  padding-left: 12px;
+}
+
+.details {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background-color: var(--blue);
+  padding: 10px;
+  color: white;
+  height: 94px;
+}
+
+.reason {
+  text-transform: lowercase;
+}
+
+.delete {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  opacity: 0.1;
+  color: var(--red);
+  transition: var(--fast);
+}
+.card:hover .delete {
+  opacity: 0.5;
+}
+.card .delete:hover {
+  opacity: 1;
+}

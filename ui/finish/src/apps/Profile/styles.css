@@ -1,0 +1,22 @@
+.form {
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 40px;
+}
+
+.text,
+.dropdown {
+  width: 35%;
+  padding: 15px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+.dropdown {
+  width: 30%;
+}
+
+.button {
+  width: 70%;
+  margin: auto;
+  margin-bottom: 20px;
+}
