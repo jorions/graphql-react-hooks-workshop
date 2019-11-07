@@ -18,7 +18,13 @@ const SIGN_UP = gql`
 `
 
 const SignUp = ({ logIn }) => {
-  const [submitSignUp, { data, loading, error }] = useMutation(SIGN_UP)
+  const [submitSignUp, { data, loading, error }] = useMutation(SIGN_UP, {
+    onCompleted({ signUp: { success, token } }) {
+      if (success) logIn(token)
+    },
+    // Catches fully malformed requests
+    onError() {},
+  })
 
   let errorMsg
   if (data && data.signUp) {
