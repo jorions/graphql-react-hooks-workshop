@@ -4,15 +4,18 @@
   margin-bottom: 40px;
 }
 
-.text,
-.dropdown {
+.text {
   width: 35%;
   padding: 15px;
   display: inline-block;
   vertical-align: bottom;
 }
+
 .dropdown {
   width: 30%;
+  padding: 15px 15px 7px;
+  display: inline-block;
+  vertical-align: bottom;
 }
 
 .button {

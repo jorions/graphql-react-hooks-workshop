@@ -48,6 +48,7 @@ const ADD_FAVORITE = gql`
     }
   }
 `
+
 const Profile = () => {
   const { id, email } = getUser()
 
@@ -130,7 +131,7 @@ const Profile = () => {
           <div styleName="text">
             <TextInput
               name="Song name"
-              label="Artist name"
+              label="Song name"
               value={name}
               onChange={handleNameChange}
               error={!!addFavoriteErrorMsg}

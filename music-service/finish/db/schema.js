@@ -15,7 +15,7 @@ const typeDefs = gql`
     localResolverTest(id: ID!): User
   }
 
-  type Mutation {
+  extend type Mutation {
     # Add song to your favorites
     addFavorite(artist: String!, name: String!, reason: Reason!): SongResponse!
     # Update reason for song favorite

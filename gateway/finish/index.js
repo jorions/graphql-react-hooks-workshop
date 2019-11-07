@@ -11,7 +11,7 @@ const logger = require('./lib/logger')
 // There is a whole lifecycle for the RemoteGraphQLDataSource class
 class AuthenticatedDataSource extends RemoteGraphQLDataSource {
   // One of those lifecycle methods is willSendRequest, which gets called right
-  // before the request is sent to each service that the gateway connects to/
+  // before the request is sent to each service that the gateway connects to.
   // This is how we will set the authorization headers that other services will
   // then use.
   // eslint-disable-next-line class-methods-use-this
