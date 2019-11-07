@@ -33,6 +33,14 @@ class SongAPI extends DataSource {
     const song = await this.store.songs.create({ artist, name, reason, userId })
     return formatSong(song)
   }
+
+  async updateFavorite({ id, reason, userId }) {
+    let song = await this.store.songs.findOne({ where: { id } })
+    if (!song) return { error: 'noSong' }
+    if (formatSong(song).userId !== userId) return { error: 'invalidSong' }
+    song = await song.update({ reason })
+    return formatSong(song)
+  }
 }
 
 module.exports = SongAPI
