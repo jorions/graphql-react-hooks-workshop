@@ -2,7 +2,7 @@
 
 module.exports = {
   Query: {
-    recentFavorites: (_, __) => {},
+    recentFavorites: (_, __, { dataSources }) => dataSources.songAPI.recentFavorites(),
     song: async (_, { id }) => {},
   },
   Mutation: {
