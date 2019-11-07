@@ -27,6 +27,12 @@ class SongAPI extends DataSource {
     const song = await this.store.songs.findOne({ where: { id } })
     return song ? formatSong(song) : { error: 'noSong' }
   }
+
+  async addFavorite({ artist, name, reason, userId }) {
+    if (!artist || !name || !reason) return { error: 'incompleteData' }
+    const song = await this.store.songs.create({ artist, name, reason, userId })
+    return formatSong(song)
+  }
 }
 
 module.exports = SongAPI

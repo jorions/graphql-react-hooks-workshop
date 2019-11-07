@@ -1,5 +1,7 @@
 'use strict'
 
+const { ForbiddenError } = require('apollo-server')
+
 module.exports = {
   Query: {
     recentFavorites: (_, __, { dataSources }) => dataSources.songAPI.recentFavorites(),
@@ -16,7 +18,11 @@ module.exports = {
     },
   },
   Mutation: {
-    addFavorite: async (_, { artist, name, reason }) => {},
+    addFavorite: async (_, { artist, name, reason }, { dataSources, userId }) => {
+      if (!userId) throw new ForbiddenError('You do not have permission to make this change')
+      const song = await dataSources.songAPI.addFavorite({ artist, name, reason, userId })
+      return song.error ? { success: false, message: song.error } : { success: true, song }
+    },
     updateFavorite: async (_, { id, reason }) => {},
     removeFavorite: async (_, { id }) => {},
   },

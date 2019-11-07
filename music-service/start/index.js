@@ -14,6 +14,10 @@ const store = createModels()
 const lyricsAPI = new LyricsAPI()
 
 const server = new ApolloServer({
+  context: async ({ req }) => {
+    const userId = req.headers['user-id']
+    return userId ? { userId: Number(userId) } : null
+  },
   typeDefs,
   resolvers,
   dataSources: () => ({
