@@ -41,6 +41,14 @@ class SongAPI extends DataSource {
     song = await song.update({ reason })
     return formatSong(song)
   }
+
+  async removeFavorite({ id, userId }) {
+    let song = await this.store.songs.findOne({ where: { id } })
+    if (!song) return { error: 'noSong' }
+    if (formatSong(song).userId !== userId) return { error: 'invalidSong' }
+    song = await song.destroy()
+    return formatSong(song)
+  }
 }
 
 module.exports = SongAPI
