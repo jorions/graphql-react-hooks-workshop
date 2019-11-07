@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
+import FormHelperText from '@material-ui/core/FormHelperText'
 
 import { getUser } from 'lib/storage'
 
@@ -13,7 +14,7 @@ import Listing from 'components/Listing'
 import TextInput from 'components/TextInput'
 import Dropdown from 'components/Dropdown'
 
-import { EVERYTHING, LYRICS, SOUND } from 'schemaValues'
+import { EVERYTHING, LYRICS, SOUND, addFavoriteErrorCodes } from 'schemaValues'
 
 import './styles.css'
 
@@ -28,6 +29,21 @@ const GET_USER = gql`
           name
           reason
         }
+      }
+    }
+  }
+`
+
+const ADD_FAVORITE = gql`
+  mutation AddFavorite($artist: String!, $name: String!, $reason: Reason!) {
+    addFavorite(artist: $artist, name: $name, reason: $reason) {
+      success
+      message
+      song {
+        id
+        artist
+        name
+        reason
       }
     }
   }
@@ -70,8 +86,34 @@ const Profile = () => {
     setReason(value)
   }
 
+  const addFavorite = song => {
+    setFavorites([song, ...favorites])
+  }
+  const [submitAddFavorite, addFavoriteInfo] = useMutation(ADD_FAVORITE, {
+    onCompleted({ addFavorite: { success, song } }) {
+      if (success) addFavorite(song)
+    },
+    // Catches fully malformed requests
+    onError() {},
+  })
+  const handleAddFavorite = () => {
+    submitAddFavorite({ variables: { artist, name, reason } })
+  }
+
   if (loading) return <Spinner />
   if (error) return <ErrorMessage />
+
+  let addFavoriteErrorMsg
+  if (
+    addFavoriteInfo.data &&
+    addFavoriteInfo.data.addFavorite &&
+    addFavoriteInfo.data.addFavorite.success === false
+  )
+    addFavoriteErrorMsg =
+      addFavoriteInfo.data.addFavorite.message === addFavoriteErrorCodes.INCOMPLETE_DATA
+        ? 'Make sure all fields are filled out'
+        : 'Something went wrong - please try again'
+  if (addFavoriteInfo.error) addFavoriteErrorMsg = 'Something went wrong - please try again'
 
   return (
     <>
@@ -92,6 +134,7 @@ const Profile = () => {
               label="Song name"
               value={name}
               onChange={handleNameChange}
+              error={!!addFavoriteErrorMsg}
               fullWidth
             />
           </div>
@@ -101,6 +144,7 @@ const Profile = () => {
               label="Artist name"
               value={artist}
               onChange={handleArtistChange}
+              error={!!addFavoriteErrorMsg}
               fullWidth
             />
           </div>
@@ -115,13 +159,29 @@ const Profile = () => {
                 { value: SOUND, display: 'Sound' },
               ]}
               onChange={handleReasonChange}
+              error={!!addFavoriteErrorMsg}
               value={reason}
             />
           </div>
+          <FormHelperText className="flex-centered pb3 mt0" error>
+            {addFavoriteErrorMsg}
+          </FormHelperText>
           <div styleName="button">
-            <Button type="submit" variant="contained" color="secondary" fullWidth>
-              Add
-            </Button>
+            {addFavoriteInfo.loading ? (
+              <div className="flex-centered">
+                <Spinner size={40} color="secondary" />
+              </div>
+            ) : (
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                onClick={handleAddFavorite}
+                fullWidth
+              >
+                Add
+              </Button>
+            )}
           </div>
         </Paper>
       </div>
