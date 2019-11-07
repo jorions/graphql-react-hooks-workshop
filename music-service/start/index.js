@@ -1,6 +1,7 @@
 'use strict'
 
 const { ApolloServer } = require('apollo-server')
+const { buildFederatedSchema } = require('@apollo/federation')
 
 const logger = require('./lib/logger')
 const createModels = require('./db/models')
@@ -18,8 +19,12 @@ const server = new ApolloServer({
     const userId = req.headers['user-id']
     return userId ? { userId: Number(userId) } : null
   },
-  typeDefs,
-  resolvers,
+  schema: buildFederatedSchema([
+    {
+      typeDefs,
+      resolvers,
+    },
+  ]),
   dataSources: () => ({
     lyricsAPI,
     songAPI: new SongAPI({ store }),

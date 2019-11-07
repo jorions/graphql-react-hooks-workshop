@@ -3,12 +3,12 @@
 const { gql } = require('apollo-server')
 
 const typeDefs = gql`
-  type Query {
+  extend type Query {
     recentFavorites: [Song]!
     song(id: ID!): SongResponse!
   }
 
-  type Mutation {
+  extend type Mutation {
     addFavorite(artist: String!, name: String!, reason: Reason!): SongResponse!
     updateFavorite(id: ID!, reason: Reason!): SongResponse!
     removeFavorite(id: ID!): SongResponse!
@@ -28,12 +28,18 @@ const typeDefs = gql`
     lyrics: String
     reason: Reason!
     createdAt: String
+    user: User
   }
 
   enum Reason {
     LYRICS
     SOUND
     EVERYTHING
+  }
+
+  extend type User @key(fields: "id") {
+    id: ID! @external
+    favorites: [Song]!
   }
 `
 

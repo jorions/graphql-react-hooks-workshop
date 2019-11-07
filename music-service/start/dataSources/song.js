@@ -28,6 +28,11 @@ class SongAPI extends DataSource {
     return song ? formatSong(song) : { error: 'noSong' }
   }
 
+  async findByUserId({ userId }) {
+    const songs = await this.store.songs.findAll({ where: { userId }, order: [['createdAt', 'DESC']] })
+    return songs.map(formatSong)
+  }
+
   async addFavorite({ artist, name, reason, userId }) {
     if (!artist || !name || !reason) return { error: 'incompleteData' }
     const song = await this.store.songs.create({ artist, name, reason, userId })

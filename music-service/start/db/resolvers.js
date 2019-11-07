@@ -34,4 +34,10 @@ module.exports = {
       return song.error ? { success: false, message: song.error } : { success: true, song }
     },
   },
+  Song: {
+    user: song => ({ __typeName: 'User', id: song.userId }),
+  },
+  User: {
+    favorites: ({ id }, _, { dataSources }) => dataSources.songAPI.findByUserId({ userId: id }),
+  },
 }
