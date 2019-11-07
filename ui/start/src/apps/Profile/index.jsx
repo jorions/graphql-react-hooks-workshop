@@ -42,6 +42,15 @@ const Profile = () => {
     },
   })
 
+  const removeFavorite = songId => {
+    const idx = favorites.findIndex(fav => fav.id === songId)
+    // Shallow copy the array of favorites so we don't mutate it directly, then
+    // remove the appropriate song
+    const updatedFavorites = [...favorites]
+    updatedFavorites.splice(idx, 1)
+    setFavorites(updatedFavorites)
+  }
+
   if (loading) return <Spinner />
   if (error) return <ErrorMessage />
 
@@ -62,6 +71,7 @@ const Profile = () => {
           createdAt={song.createdAt}
           reason={song.reason}
           name={song.name}
+          removeFavorite={removeFavorite}
         />
       ))}
     </>
