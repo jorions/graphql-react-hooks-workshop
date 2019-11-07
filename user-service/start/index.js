@@ -3,6 +3,7 @@
 require('dotenv').config()
 
 const { ApolloServer } = require('apollo-server')
+const { buildFederatedSchema } = require('@apollo/federation')
 
 const logger = require('./lib/logger')
 const createModels = require('./db/models')
@@ -15,8 +16,12 @@ const store = createModels()
 const userAPI = new UserAPI({ store })
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema: buildFederatedSchema([
+    {
+      typeDefs,
+      resolvers,
+    },
+  ]),
   dataSources: () => ({
     userAPI,
   }),

@@ -3,11 +3,11 @@
 const { gql } = require('apollo-server')
 
 const typeDefs = gql`
-  type Query {
+  extend type Query {
     user(id: ID!): UserResponse!
   }
 
-  type Mutation {
+  extend type Mutation {
     signUp(email: String!, password: String!): UserResponse!
     logIn(email: String!, password: String!): UserResponse!
   }
@@ -21,7 +21,7 @@ const typeDefs = gql`
     user: User
   }
 
-  type User {
+  type User @key(fields: "id") {
     id: ID!
     email: String!
   }

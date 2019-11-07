@@ -31,4 +31,13 @@ module.exports = {
       return { success: true, token }
     },
   },
+  User: {
+    // eslint-disable-next-line no-underscore-dangle
+    async __resolveReference(serviceObject, { dataSources }) {
+      const { id } = serviceObject
+      const user = await dataSources.userAPI.findById({ id })
+      if (user.error) return null // When there is no match, just return null
+      return { ...serviceObject, ...user }
+    },
+  },
 }
